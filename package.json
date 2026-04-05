@@ -1,0 +1,31 @@
+{
+  "name": "jira-automation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Intelligent QA Automation & Ticketing Platform",
+  "workspaces": [
+    "client",
+    "server",
+    "functions"
+  ],
+  "scripts": {
+    "dev:client": "npm run dev --workspace=client",
+    "dev:server": "npm run start:dev --workspace=server",
+    "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
+    "build:client": "npm run build --workspace=client",
+    "build:server": "npm run build --workspace=server",
+    "build": "npm run build:client && npm run build:server",
+    "test:client": "npm test --workspace=client",
+    "test:server": "npm test --workspace=server",
+    "test": "npm run test:client && npm run test:server",
+    "test:e2e:playwright": "npx playwright test",
+    "test:e2e:cypress": "npx cypress run",
+    "lint": "npm run lint --workspace=client && npm run lint --workspace=server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "dependencies": {
+    "firebase-tools": "^15.13.0"
+  }
+}

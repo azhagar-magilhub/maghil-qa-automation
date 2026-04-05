@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "client",
+      "runtimeExecutable": "/usr/local/bin/node",
+      "runtimeArgs": ["--input-type=module", "-e", "process.chdir('client'); await import('./node_modules/vite/bin/vite.js');"],
+      "port": 5173
+    }
+  ]
+}

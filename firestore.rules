@@ -1,0 +1,230 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Users — owner access only
+    match /users/{uid} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+
+      match /integrations/{type} {
+        allow read, write: if request.auth != null && request.auth.uid == uid;
+      }
+      match /mappingTemplates/{templateId} {
+        allow read, write: if request.auth != null && request.auth.uid == uid;
+      }
+      match /environments/{envId} {
+        allow read, write: if request.auth != null && request.auth.uid == uid;
+      }
+      match /settings/{settingId} {
+        allow read, write: if request.auth != null && request.auth.uid == uid;
+      }
+    }
+
+    // Ticket batches — authenticated users
+    match /ticketBatches/{batchId} {
+      allow read, write: if request.auth != null;
+
+      match /tickets/{ticketId} {
+        allow read, write: if request.auth != null;
+      }
+    }
+
+    // Audit logs — any authenticated user can read and create
+    match /auditLogs/{logId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Test suites & cases
+    match /testSuites/{suiteId} {
+      allow read, write: if request.auth != null;
+
+      match /testCases/{caseId} {
+        allow read, write: if request.auth != null;
+      }
+    }
+
+    // Test runs
+    match /testRuns/{runId} {
+      allow read, write: if request.auth != null;
+      match /results/{resultId} {
+        allow read, write: if request.auth != null;
+      }
+    }
+
+    // Test executions (Web, Mobile, etc.)
+    match /testExecutions/{execId} {
+      allow read, write: if request.auth != null;
+      match /results/{resultId} {
+        allow read, write: if request.auth != null;
+      }
+    }
+
+    // API test collections
+    match /apiCollections/{collId} {
+      allow read, write: if request.auth != null;
+      match /requests/{reqId} {
+        allow read, write: if request.auth != null;
+      }
+      match /runs/{runId} {
+        allow read, write: if request.auth != null;
+        match /results/{resultId} {
+          allow read, write: if request.auth != null;
+        }
+      }
+    }
+
+    // Security scans
+    match /securityScans/{scanId} {
+      allow read, write: if request.auth != null;
+      match /findings/{findingId} {
+        allow read, write: if request.auth != null;
+      }
+    }
+
+    // Performance runs
+    match /performanceRuns/{runId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Notifications
+    match /notifications/{notifId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Environments
+    match /environments/{envId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // AI generations
+    match /aiGenerations/{genId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Release notes
+    match /releaseNotes/{noteId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Contracts
+    match /contracts/{contractId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Chaos experiments
+    match /chaosExperiments/{expId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // DB connections and test runs
+    match /dbConnections/{connId} {
+      allow read, write: if request.auth != null;
+    }
+    match /dbTestRuns/{runId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Snapshots
+    match /snapshots/{snapshotId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Flake records
+    match /flakeRecords/{testId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Compliance checklists
+    match /complianceChecklists/{checklistId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Coverage reports
+    match /coverageReports/{reportId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Release gates
+    match /releaseGates/{gateId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // CI/CD builds
+    match /builds/{buildId} {
+      allow read, write: if request.auth != null;
+    }
+    match /pipelineBuilds/{buildId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Log sources and alert rules
+    match /logSources/{sourceId} {
+      allow read, write: if request.auth != null;
+    }
+    match /logAlertRules/{ruleId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Schedules
+    match /schedules/{scheduleId} {
+      allow read, write: if request.auth != null;
+    }
+    match /scheduleRuns/{runId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Teams
+    match /teams/{teamId} {
+      allow read, write: if request.auth != null;
+
+      match /members/{memberId} {
+        allow read, write: if request.auth != null;
+      }
+    }
+
+    // Team invites
+    match /teamInvites/{inviteId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Projects
+    match /projects/{projectId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Webhooks
+    match /webhooks/{webhookId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Webhook events
+    match /webhookEvents/{eventId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // API metrics
+    match /apiMetrics/{metricId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Masking rules
+    match /maskingRules/{ruleId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Dashboard layouts
+    match /dashboardLayouts/{layoutId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Feedback
+    match /feedback/{feedbackId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Test library (shared snippets)
+    match /testLibrary/{snippetId} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
