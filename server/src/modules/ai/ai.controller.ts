@@ -79,4 +79,19 @@ export class AiController {
   ) {
     return this.aiService.generateGherkin(user.uid, body);
   }
+
+  @Post('root-cause')
+  async analyzeRootCause(
+    @CurrentUser() user: FirebaseUser,
+    @Body()
+    body: {
+      errorMessage: string;
+      stackTrace: string;
+      testName: string;
+      testType: string;
+      context: string;
+    },
+  ) {
+    return this.aiService.analyzeRootCause(user.uid, body);
+  }
 }

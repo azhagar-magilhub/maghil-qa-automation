@@ -44,6 +44,8 @@ import {
   Library,
   ArrowUpDown,
   Heart,
+  TrendingUp,
+  Microscope,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useFavoritesStore } from '@/store/favorites.store'
@@ -80,6 +82,9 @@ const qaTestingNavItems = [
   { label: 'Scheduler', path: '/scheduler', icon: Clock },
   { label: 'Screenshots', path: '/screenshots', icon: Image },
   { label: 'Test Library', path: '/test-library', icon: Library },
+  { label: 'Test Metrics', path: '/test-metrics', icon: BarChart3 },
+  { label: 'Priority', path: '/test-priority', icon: TrendingUp },
+  { label: 'Root Cause', path: '/root-cause', icon: Microscope },
 ]
 
 const platformNavItems = [
@@ -92,6 +97,8 @@ const platformNavItems = [
   { label: 'Webhooks', path: '/webhooks', icon: Link2 },
   { label: 'API Analytics', path: '/api-analytics', icon: Activity },
   { label: 'Data Masking', path: '/data-masking', icon: EyeOff },
+  { label: 'Mock Server', path: '/mock-server', icon: Server },
+  { label: 'Collaboration', path: '/collaboration', icon: Users },
 ]
 
 const aiNavItems = [

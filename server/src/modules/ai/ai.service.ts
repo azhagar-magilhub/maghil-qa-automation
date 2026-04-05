@@ -210,6 +210,71 @@ export class AiService {
     return { feature };
   }
 
+  async analyzeRootCause(
+    userId: string,
+    input: {
+      errorMessage: string;
+      stackTrace: string;
+      testName: string;
+      testType: string;
+      context: string;
+    },
+  ): Promise<Record<string, unknown>> {
+    const systemPrompt = `You are a senior QA engineer and debugging expert. Analyze test failures and provide structured root cause analysis. Always respond in valid JSON with this exact structure:
+{
+  "analysis": {
+    "rootCause": "1-2 sentence description of the most likely root cause",
+    "category": "one of: Environment, Code Bug, Data Issue, Timing, Infrastructure, Configuration",
+    "confidence": "one of: High, Medium, Low",
+    "suggestedFix": ["step 1", "step 2", "step 3"],
+    "relatedTests": ["test names that might be affected"],
+    "similarPastFailures": ["descriptions of similar failure patterns"]
+  }
+}`;
+
+    const userPrompt = `Analyze this test failure:
+
+Test Name: ${input.testName}
+Test Type: ${input.testType}
+Error Message: ${input.errorMessage}
+Stack Trace: ${input.stackTrace || 'Not available'}
+Context: ${input.context}
+
+Provide your root cause analysis as JSON.`;
+
+    const response = await this.callAI(userPrompt, systemPrompt);
+
+    let parsed: Record<string, unknown>;
+    try {
+      parsed = JSON.parse(response);
+    } catch {
+      parsed = {
+        analysis: {
+          rootCause: response || 'Unable to determine root cause',
+          category: 'Code Bug',
+          confidence: 'Low',
+          suggestedFix: ['Review the error message and stack trace manually'],
+          relatedTests: [],
+          similarPastFailures: [],
+        },
+      };
+      this.logger.warn('Failed to parse AI root cause response as JSON');
+    }
+
+    // Store analysis record
+    const genRef = this.db.collection(`users/${userId}/aiGenerations`).doc();
+    await genRef.set({
+      type: 'root-cause',
+      input: { testName: input.testName, testType: input.testType },
+      output: parsed,
+      model: this.model,
+      provider: this.provider,
+      createdAt: new Date(),
+    });
+
+    return parsed;
+  }
+
   async callAI(prompt: string, systemPrompt: string): Promise<string> {
     if (this.provider === 'openai') {
       return this.callOpenAI(prompt, systemPrompt);

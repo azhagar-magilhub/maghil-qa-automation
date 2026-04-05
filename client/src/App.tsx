@@ -61,6 +61,11 @@ const PreferencesPage = lazy(() => import('@/pages/PreferencesPage'))
 const ScreenshotGalleryPage = lazy(() => import('@/pages/ScreenshotGalleryPage'))
 const TestLibraryPage = lazy(() => import('@/pages/TestLibraryPage'))
 const ExportImportPage = lazy(() => import('@/pages/ExportImportPage'))
+const CollaborationPage = lazy(() => import('@/pages/CollaborationPage'))
+const TestPrioritizationPage = lazy(() => import('@/pages/TestPrioritizationPage'))
+const RootCauseAnalysisPage = lazy(() => import('@/pages/RootCauseAnalysisPage'))
+const MockServerPage = lazy(() => import('@/pages/MockServerPage'))
+const TestMetricsPage = lazy(() => import('@/pages/TestMetricsPage'))
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -144,6 +149,11 @@ export default function App() {
                   <Route path="/screenshots" element={withPageErrorBoundary(<ScreenshotGalleryPage />)} />
                   <Route path="/test-library" element={withPageErrorBoundary(<TestLibraryPage />)} />
                   <Route path="/export-import" element={withPageErrorBoundary(<ExportImportPage />)} />
+                  <Route path="/collaboration" element={withPageErrorBoundary(<CollaborationPage />)} />
+                  <Route path="/test-priority" element={withPageErrorBoundary(<TestPrioritizationPage />)} />
+                  <Route path="/root-cause" element={withPageErrorBoundary(<RootCauseAnalysisPage />)} />
+                  <Route path="/mock-server" element={withPageErrorBoundary(<MockServerPage />)} />
+                  <Route path="/test-metrics" element={withPageErrorBoundary(<TestMetricsPage />)} />
                   <Route path="/setup" element={withPageErrorBoundary(<SetupWizardPage />)} />
                   <Route path="/settings" element={withPageErrorBoundary(<SettingsPage />)} />
                 </Route>

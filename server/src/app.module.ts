@@ -33,6 +33,7 @@ import { SchedulerModule } from './modules/scheduler/scheduler.module';
 import { TeamModule } from './modules/team/team.module';
 import { ProjectModule } from './modules/project/project.module';
 import { WebhooksModule } from './modules/webhooks/webhooks.module';
+import { MockServerModule } from './modules/mock-server/mock-server.module';
 
 @Module({
   imports: [
@@ -68,6 +69,7 @@ import { WebhooksModule } from './modules/webhooks/webhooks.module';
     TeamModule,
     ProjectModule,
     WebhooksModule,
+    MockServerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
